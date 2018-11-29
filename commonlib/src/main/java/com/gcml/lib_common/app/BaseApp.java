@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.multidex.MultiDex;
 
 import com.gcml.lib_common.lifecycle.AppDelegate;
+import com.gcml.lib_common.lifecycle.TopActivityHelper;
 import com.gcml.lib_common.util.business.UiUtils;
 import com.iflytek.cloud.SpeechUtility;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -32,6 +33,7 @@ public class BaseApp extends Application {
         initBugly();
         initXFVoice();
         screenAdaptation();
+        registerActivityLifecycleCallbacks(new TopActivityHelper());
     }
 
     @Override
