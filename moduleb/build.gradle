@@ -1,0 +1,22 @@
+apply from: rootProject.file('build-base.gradle')
+//apply plugin: 'com.android.application'
+
+android {
+    defaultConfig {
+        if (project.ext.runAsApp) {
+            applicationId "com.gcml.moduleb"
+        }
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+dependencies {
+}
+

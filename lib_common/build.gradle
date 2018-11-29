@@ -1,0 +1,37 @@
+apply from: rootProject.file('build-base.gradle')
+android {
+    defaultConfig {
+        if (project.ext.runAsApp)
+            applicationId "com.gcml.lib_common"
+    }
+
+
+    buildTypes {
+        debug {
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            buildConfigField "boolean", "USE_CANARY", "true"
+            buildConfigField("String", "SERVER_ADDRESS", rootProject.ext.developUrl)
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+            buildConfigField "boolean", "USE_CANARY", "false"
+            buildConfigField("String", "SERVER_ADDRESS", rootProject.ext.produceUrl)
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+}
+
+dependencies {
+    api project(':lib-voice')
+    //dagger2
+    implementation rootProject.ext.dependencies["dagger2"]
+    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
+}

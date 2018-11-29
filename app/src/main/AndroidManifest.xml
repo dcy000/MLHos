@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gcml.mlhospital">
+
+    <application
+        android:name="com.gcml.lib_common.app.BaseApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity-alias
+            android:name="com.example.han.referralproject.WelcomeActivity"
+            android:label="新健康管家"
+            android:targetActivity=".Main2Activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity android:name=".Main2Activity" />
+    </application>
+
+</manifest>

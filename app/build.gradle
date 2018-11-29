@@ -1,0 +1,23 @@
+ext.mainApp = true
+apply from: rootProject.file('build-base.gradle')
+android {
+    signingConfigs {
+        config {
+            keyAlias 'zhuanzhenbao'
+            keyPassword 'ml123456'
+            storeFile file('F:/ml.jks')
+            storePassword 'ml123456'
+        }
+    }
+    defaultConfig {
+        if (project.ext.runAsApp) {
+            applicationId "com.example.han.referralproject"
+        }
+    }
+}
+
+dependencies {
+    addComponent "modulea"
+    addComponent "moduleb"
+    api project(':lib_common')
+}
