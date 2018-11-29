@@ -19,5 +19,5 @@ android {
 dependencies {
     addComponent "modulea"
     addComponent "moduleb"
-    api project(':lib_common')
+    api project(':commonlib')
 }
