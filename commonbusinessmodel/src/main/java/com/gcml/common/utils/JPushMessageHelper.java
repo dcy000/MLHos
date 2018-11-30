@@ -14,11 +14,11 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.gcml.common.app.lifecycle.TopActivityHelper;
-import com.gcml.common.bus.RxBus;
 import com.gcml.common.business.R;
 import com.gcml.common.data.MessageBean;
 import com.gcml.common.utils.data.TimeUtils;
+import com.gcml.lib_common.bus.RxBus;
+import com.gcml.lib_common.lifecycle.TopActivityHelper;
 import com.github.mmin18.widget.RealtimeBlurView;
 import com.iflytek.synthetize.MLVoiceSynthetize;
 

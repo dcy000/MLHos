@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gcml.common.business.R;
-import com.gcml.common.repository.imageloader.ImageLoader;
+import com.gcml.lib_common.repository.imageloader.ImageLoader;
 
 /**
  * 作者：wecent

@@ -13,9 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gcml.common.business.R;
-import com.gcml.common.repository.imageloader.ImageLoader;
 import com.gcml.common.utils.DisplayHelper;
 import com.gcml.common.widget.popup.base.BasePopupWindow;
+import com.gcml.lib_common.repository.imageloader.ImageLoader;
 
 /**
  * 作者：wecent

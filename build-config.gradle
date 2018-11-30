@@ -1,9 +1,9 @@
 ext {
 
     api = [
-            wuhanHosProduceUrl: "\"http://118.31.73.176:8080\"",
-            hosTestUrl        : "\"http://47.96.98.60:8070\"",
-            lanzhouHosProduceUrl : "\"http://118.31.73.176:8090\"",
+            wuhanHosProduceUrl  : "\"http://118.31.73.176:8080\"",
+            hosTestUrl          : "\"http://47.96.98.60:8070\"",
+            lanzhouHosProduceUrl: "\"http://118.31.73.176:8090\"",
     ]
 
     //服务器地址
@@ -33,6 +33,7 @@ ext {
             espressoSdkVersion      : "3.0.2",
             leakCanarySdkVersion    : "1.5.4",
             blockCanarySdkVersion   : "1.5.0",
+            okgoVersion             : "3.0.4",
     ]
 
     dependencies = [
@@ -75,6 +76,7 @@ ext {
             "room-compiler"                      : "android.arch.persistence.room:compiler:${version["androidArchSdkVersion"]}",
             "room-testing"                       : "android.arch.persistence.room:testing:${version["androidArchSdkVersion"]}",
             "room-rxjava2"                       : "android.arch.persistence.room:rxjava2:${version["androidArchSdkVersion"]}",
+            "okgo"                               : "com.lzy.net:okgo:3.0.4",
 
             //view
             "autolayout"                         : "com.zhy:autolayout:1.4.5",

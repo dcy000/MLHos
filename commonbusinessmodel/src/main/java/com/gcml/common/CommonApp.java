@@ -3,10 +3,10 @@ package com.gcml.common;
 import android.app.Application;
 import android.content.Context;
 
-import com.gcml.common.app.lifecycle.AppLifecycleCallbacks;
 import com.gcml.common.utils.JPushMessageHelper;
 import com.gcml.common.utils.UtilsManager;
 import com.gcml.common.utils.ui.UiUtils;
+import com.gcml.lib_common.lifecycle.AppLifecycleCallbacks;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 

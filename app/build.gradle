@@ -18,4 +18,5 @@ android {
 
 dependencies {
     api project(':commonlib')
+    api project(':commonbusinessmodel')
 }
