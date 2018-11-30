@@ -1,1 +1,1 @@
-include ':app', ':commonlib', ':voicelib', ':widgetlib'
+include ':app', ':commonlib', ':voicelib', ':widgetlib', ':authmodule',  ':commonbusinessmodel'

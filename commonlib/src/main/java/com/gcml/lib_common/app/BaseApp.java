@@ -15,7 +15,7 @@ import com.tencent.bugly.crashreport.CrashReport;
  */
 
 public class BaseApp extends Application {
-    public Context context;
+    public static Application app;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -29,7 +29,7 @@ public class BaseApp extends Application {
     public void onCreate() {
         super.onCreate();
         AppDelegate.INSTANCE.onCreate(this);
-        context = getApplicationContext();
+        app = this;
         initBugly();
         initXFVoice();
         screenAdaptation();
