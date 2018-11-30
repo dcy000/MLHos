@@ -32,7 +32,6 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         tvHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CC.obtainBuilder("com.gcml.modulea.BMainActivity").build().call();
             }
         });
 
