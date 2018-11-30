@@ -20,6 +20,9 @@ import com.gcml.lib_common.base.old.BaseActivity;
 import com.gcml.lib_common.oldnet.NetworkApi;
 import com.gcml.lib_common.oldnet.NetworkManager;
 import com.gcml.lib_common.util.common.ActivityHelper;
+import com.iflytek.synthetize.MLVoiceSynthetize;
+import com.kaer.sdk.IDCardItem;
+import com.kaer.sdk.bt.OnBluetoothListener;
 import com.tencent.bugly.crashreport.biz.UserInfoBean;
 
 import java.lang.reflect.Method;
@@ -592,12 +595,6 @@ public class RegisterByIdCardActivity extends BaseActivity implements SomeCommon
         return btHandler;
     }
 
-    @Override
-    protected void onResume() {
-        setDisableGlobalListen(true);
-        setEnableListeningLoop(false);
-        super.onResume();
-    }
 
     public void onRootClick(View view) {
         onReadFailed();
@@ -606,7 +603,7 @@ public class RegisterByIdCardActivity extends BaseActivity implements SomeCommon
     @Override
     protected void onPause() {
         super.onPause();
-        stopSpeaking();
+        MLVoiceSynthetize.stop();
     }
 
 
