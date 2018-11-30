@@ -11,6 +11,8 @@ import android.net.wifi.WifiManager;
 import android.provider.Settings;
 import android.text.TextUtils;
 
+import com.gcml.lib_common.app.BaseApp;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +29,11 @@ public class Utils {
     @SuppressLint("MissingPermission")
     public static String getDeviceId(ContentResolver contentResolver) {
         return Settings.System.getString(contentResolver, Settings.System.ANDROID_ID);
+    }
+
+    @SuppressLint("MissingPermission")
+    public static String getDeviceId() {
+        return Settings.System.getString(BaseApp.app.getContentResolver(), Settings.System.ANDROID_ID);
     }
 
     public static boolean isValidPhone(String phone) {

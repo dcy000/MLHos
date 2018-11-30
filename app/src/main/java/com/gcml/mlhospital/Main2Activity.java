@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.billy.cc.core.component.CC;
 import com.iflytek.synthetize.MLVoiceSynthetize;
 
 public class Main2Activity extends AppCompatActivity implements View.OnClickListener {
