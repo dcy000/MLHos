@@ -1,5 +1,4 @@
 apply from: rootProject.file('build-base.gradle')
-
 android {
     defaultConfig {
         if (project.ext.runAsApp) {
