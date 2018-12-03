@@ -13,7 +13,6 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Surface;
@@ -25,18 +24,31 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.gcml.auth.R;
 import com.gcml.auth.require2.bean.EquipmentXFInfoBean;
+import com.gcml.auth.require2.bean.PersonInfoResultBean;
+import com.gcml.common.data.UserInfoBean;
+import com.gcml.common.oldface.CreateGroupListener;
+import com.gcml.common.oldface.FaceAuthenticationUtils;
+import com.gcml.common.oldface.JoinGroupListener;
+import com.gcml.common.oldface.VertifyFaceListener;
+import com.gcml.common.oldnet.NetworkApi;
+import com.gcml.common.oldnet.NetworkManager;
+import com.gcml.common.utils.display.ToastUtils;
+import com.gcml.common.utils.localdata.LocalShared;
+import com.gcml.lib_common.app.BaseApp;
 import com.gcml.lib_common.base.old.BaseActivity;
-import com.gcml.lib_common.oldnet.NetworkApi;
-import com.gcml.lib_common.oldnet.NetworkManager;
 import com.gcml.lib_common.util.business.Utils;
 import com.gcml.lib_common.util.common.ActivityHelper;
+import com.gcml.lib_common.util.common.Handlers;
+import com.gcml.lib_common.util.common.T;
 import com.google.gson.Gson;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.IdentityResult;
 import com.iflytek.cloud.SpeechError;
-import com.tencent.bugly.crashreport.biz.UserInfoBean;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,7 +59,8 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import retrofit2.Response;
+import timber.log.Timber;
+
 
 public class FaceLoginActivity extends BaseActivity {
 
@@ -198,9 +211,9 @@ public class FaceLoginActivity extends BaseActivity {
                         JSONObject resultJson = new JSONObject(resultStr);
                         if (ErrorCode.SUCCESS == resultJson.getInt("ret")) {//此处检验百分比
                             JSONArray scoreList = resultJson.getJSONObject("ifv_result").getJSONArray("candidates");
-                            Logger.e(scoreList.toString());
+                            Timber.e(scoreList.toString());
                             String scoreFirstXfid = scoreList.getJSONObject(0).optString("user");
-                            Logger.e("最高分数的讯飞id" + scoreFirstXfid);
+                            Timber.e("最高分数的讯飞id" + scoreFirstXfid);
                             final double firstScore = scoreList.getJSONObject(0).optDouble("score");
                             if (firstScore > 80) {
                                 if ("Test".equals(fromString) || "Welcome".equals(fromString)) {
@@ -216,19 +229,19 @@ public class FaceLoginActivity extends BaseActivity {
                             } else {
                                 if (firstScore > 30) {
                                     authenticationNum = 0;
-                                    ToastTool.showShort("请将您的面孔靠近摄像头，再试一次");
+                                    ToastUtils.showShort("请将您的面孔靠近摄像头，再试一次");
                                     myHandler.sendEmptyMessageDelayed(TO_CAMERA_PRE_RESOLVE, 1000);
                                 } else {
-                                    ToastTool.showLong("匹配度" + String.format("%.2f", firstScore) + "%,验证不通过!");
+                                    ToastUtils.showLong("匹配度" + String.format("%.2f", firstScore) + "%,验证不通过!");
                                     finishActivity();
                                 }
                             }
                         } else {
-                            ToastTool.showShort("识别失败");
+                            ToastUtils.showShort("识别失败");
                             finishActivity();
                         }
                     } catch (JSONException e) {
-                        Logger.e(e, "验证失败");
+                        Timber.e(e, "验证失败");
                     }
                 }
 
@@ -239,10 +252,10 @@ public class FaceLoginActivity extends BaseActivity {
 
                 @Override
                 public void onError(SpeechError error) {
-                    Logger.e(error, "验证出错");
+                    Timber.e(error, "验证出错");
                     if (authenticationNum < 5) {
                         authenticationNum++;
-                        ToastTool.showShort("第" + Utils.getChineseNumber(authenticationNum) + "次验证失败");
+                        ToastUtils.showShort("第" + Utils.getChineseNumber(authenticationNum) + "次验证失败");
 //                                    myHandler.sendEmptyMessage(2);
 //                                    myHandler.sendEmptyMessageDelayed(1, 2000);
                         myHandler.sendEmptyMessageDelayed(TO_CAMERA_PRE_RESOLVE, 1000);
@@ -263,7 +276,7 @@ public class FaceLoginActivity extends BaseActivity {
         mRightView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(FaceLoginActivity.this, WifiConnectActivity.class));
+//                startActivity(new Intent(FaceLoginActivity.this, WifiConnectActivity.class));
             }
         });
         ActivityHelper.addActivity(this);
@@ -279,8 +292,9 @@ public class FaceLoginActivity extends BaseActivity {
     private void authenticationSuccessForTest$Welcome(String scoreFirstXfid, String groupId) {
         String[] split = scoreFirstXfid.split("_");
         LocalShared.getInstance(this).setUserId(split[1]);
-        MyApplication.getInstance().userId = split[1];
-        new JpushAliasUtils(this).setAlias("user_" + split[1]);
+        LocalShared.getInstance(BaseApp.app).setUserId(split[1]);
+
+//        new JpushAliasUtils(this).setAlias("user_" + split[1]);
 
         NetworkApi.loginByXunFei(scoreFirstXfid, groupId, new StringCallback() {
             @Override
@@ -291,7 +305,7 @@ public class FaceLoginActivity extends BaseActivity {
                         PersonInfoResultBean bean = gson.fromJson(response.body(), PersonInfoResultBean.class);
                         if (bean != null) {
                             if (bean.tag) {
-                                startActivity(new Intent(FaceLoginActivity.this, InquiryAndFileActivity.class));
+//                                startActivity(new Intent(FaceLoginActivity.this, InquiryAndFileActivity.class));
                                 finish();
                             } else {
                                 T.show("网络繁忙请稍后重试");
@@ -313,7 +327,7 @@ public class FaceLoginActivity extends BaseActivity {
      * 支付成功
      */
     private void paySuccess() {
-        NetworkApi.pay_status(MyApplication.getInstance().userId, Utils.getDeviceId(), orderid, new NetworkManager.SuccessCallback<String>() {
+        NetworkApi.pay_status(LocalShared.getInstance(BaseApp.app).getUserId(), Utils.getDeviceId(), orderid, new NetworkManager.SuccessCallback<String>() {
             @Override
             public void onSuccess(String response) {
                 setResult(RESULT_OK);
@@ -332,8 +346,8 @@ public class FaceLoginActivity extends BaseActivity {
         NetworkApi.pay_cancel("3", "0", "1", orderid, new NetworkManager.SuccessCallback<String>() {
             @Override
             public void onSuccess(String response) {
-                speak(getString(R.string.shop_yanzheng));
-                ToastTool.showShort("验证不通过");
+                mlSpeak("主人，验证不通过，请重新验证");
+                ToastUtils.showShort("验证不通过");
                 finish();
 
             }
@@ -390,7 +404,7 @@ public class FaceLoginActivity extends BaseActivity {
 
             @Override
             public void onError(SpeechError error) {
-                Logger.e(error, "添加成员出现异常");
+                Timber.e(error, "添加成员出现异常");
                 if (error.getErrorCode() == 10143 || error.getErrorCode() == 10106) {//该组不存在;无效的参数
                     createGroup(currentXfid);
                 } else {
@@ -425,7 +439,7 @@ public class FaceLoginActivity extends BaseActivity {
 
             @Override
             public void onError(SpeechError error) {
-                Logger.e(error, "创建组失败");
+                Timber.e(error, "创建组失败");
             }
         });
     }
@@ -506,7 +520,7 @@ public class FaceLoginActivity extends BaseActivity {
     private SurfaceHolder.Callback callback = new SurfaceHolder.Callback() {
         @Override
         public void surfaceCreated(SurfaceHolder holder) {
-            Logger.e("getHolder().addCallback所在线程");
+            Timber.e("getHolder().addCallback所在线程");
             Handlers.bg().post(new Runnable() {
                 @Override
                 public void run() {
@@ -549,7 +563,7 @@ public class FaceLoginActivity extends BaseActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ToastTool.showShort("启动相机失败");
+                ToastUtils.showShort("启动相机失败");
                 finishActivity();
             }
         });
@@ -566,27 +580,6 @@ public class FaceLoginActivity extends BaseActivity {
         mTiaoguo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (isTest) {
-                    startActivity(new Intent(FaceLoginActivity.this, Test_mainActivity.class)
-                            .putExtra("isTest", isTest));
-                    return;
-                }
-
-                if ("Test".equals(fromString)) {
-                    Intent intent = new Intent();
-                    if (TextUtils.isEmpty(fromType)) {
-                        intent.setClass(FaceLoginActivity.this, Test_mainActivity.class);
-                    } else if ("xindian".equals(fromType)) {
-                        intent.setClass(FaceLoginActivity.this, XinDianDetectActivity.class);
-                    } else {
-                        intent.setClass(FaceLoginActivity.this, DetectActivity.class);
-                        intent.putExtra("type", fromType);
-                    }
-                    startActivity(intent);
-                } else if ("Welcome".equals(fromString)) {
-                    startActivity(new Intent(FaceLoginActivity.this, SignInActivity.class));
-                }
                 finishActivity();
             }
         });
@@ -603,7 +596,7 @@ public class FaceLoginActivity extends BaseActivity {
                     myHandler.sendEmptyMessage(TO_CAMERA_PRE_RESOLVE);
                     openOrcloseAnimation = false;
                 }
-                Logger.e("动画结束");
+                Timber.e("动画结束");
             }
 
             @Override
@@ -742,7 +735,7 @@ public class FaceLoginActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Logger.e("onDestroy");
+        Timber.e("onDestroy");
         Handlers.bg().removeCallbacksAndMessages(null);
         if (lottAnimation != null)
             lottAnimation.cancelAnimation();

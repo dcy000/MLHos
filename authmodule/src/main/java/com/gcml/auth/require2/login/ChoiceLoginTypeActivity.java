@@ -10,10 +10,12 @@ import com.gcml.auth.R;
 import com.gcml.auth.require2.healthservice.BindHealthManageSystemActivity;
 import com.gcml.auth.require2.register.activtiy.ChoiceIDCardRegisterTypeActivity;
 import com.gcml.auth.require2.register.activtiy.RegisterByIdCardActivity;
+import com.gcml.common.oldnet.NetworkApi;
 import com.gcml.lib_common.base.old.BaseActivity;
-import com.gcml.lib_common.oldnet.NetworkApi;
 import com.gcml.lib_common.util.business.Utils;
 import com.gcml.lib_common.util.common.ActivityHelper;
+import com.gcml.lib_common.util.common.T;
+import com.lzy.okgo.callback.StringCallback;
 
 import org.json.JSONObject;
 
@@ -44,26 +46,6 @@ public class ChoiceLoginTypeActivity extends BaseActivity {
         ActivityHelper.addActivity(this);
     }
 
-    /**
-     *
-     */
-    private void get3BindInfo() {
-        NetworkApi.getBindAccountInfo(Utils.getDeviceId(), new StringCallback() {
-            @Override
-            public void onSuccess(Response<String> response) {
-                String body = response.body();
-                try {
-                    JSONObject object = new JSONObject(body);
-                    if (!object.optBoolean("tag")) {
-                        startActivity(new Intent(ChoiceLoginTypeActivity.this, BindHealthManageSystemActivity.class));
-                    }
-                } catch (Exception e) {
-
-                }
-            }
-        });
-    }
-
 
     private void initTitle() {
         mToolbar.setVisibility(View.VISIBLE);
@@ -78,7 +60,7 @@ public class ChoiceLoginTypeActivity extends BaseActivity {
         mRightView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChoiceLoginTypeActivity.this, WifiConnectActivity.class));
+//                startActivity(new Intent(ChoiceLoginTypeActivity.this, WifiConnectActivity.class));
             }
         });
 
@@ -112,8 +94,6 @@ public class ChoiceLoginTypeActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        setEnableListeningLoop(false);
-        setDisableGlobalListen(true);
 //        get3BindInfo();
     }
 }

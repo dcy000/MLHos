@@ -5,7 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.billy.cc.core.component.CC;
+import com.example.han.referralproject.R;
 import com.iflytek.synthetize.MLVoiceSynthetize;
+
 
 public class Main2Activity extends AppCompatActivity implements View.OnClickListener {
 
@@ -31,6 +34,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         tvHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                CC.obtainBuilder("com.gcml.chocelogin").build().call();
             }
         });
 

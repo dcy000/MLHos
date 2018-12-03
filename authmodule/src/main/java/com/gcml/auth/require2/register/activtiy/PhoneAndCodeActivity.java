@@ -8,10 +8,12 @@ import android.widget.TextView;
 
 import com.gcml.auth.R;
 import com.gcml.auth.require2.wrap.PhoneVerificationCodeView;
+import com.gcml.common.utils.display.ToastUtils;
 import com.gcml.lib_common.base.old.BaseActivity;
-import com.gcml.lib_common.oldnet.NetworkApi;
-import com.gcml.lib_common.oldnet.NetworkManager;
+import com.gcml.common.oldnet.NetworkApi;
+import com.gcml.common.oldnet.NetworkManager;
 import com.gcml.lib_common.util.common.ActivityHelper;
+import com.gcml.lib_common.util.common.T;
 import com.iflytek.synthetize.MLVoiceSynthetize;
 
 import org.json.JSONException;
@@ -20,6 +22,8 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.gcml.auth.require2.register.activtiy.IDCardNumberRegisterActivity.REGISTER_PHONE_NUMBER;
 
 
 public class PhoneAndCodeActivity extends BaseActivity implements PhoneVerificationCodeView.OnSendClickListener {
@@ -63,7 +67,7 @@ public class PhoneAndCodeActivity extends BaseActivity implements PhoneVerificat
         mRightView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(PhoneAndCodeActivity.this, WifiConnectActivity.class));
+//                startActivity(new Intent(PhoneAndCodeActivity.this, WifiConnectActivity.class));
             }
         });
 
@@ -173,7 +177,7 @@ public class PhoneAndCodeActivity extends BaseActivity implements PhoneVerificat
             @Override
             public void onFailed(String message) {
                 hideLoadingDialog();
-                T.show("该手机号码已使用,请确认后重新使用");
+                ToastUtils.showLong("该手机号码已使用,请确认后重新使用");
             }
         });
 
@@ -187,7 +191,6 @@ public class PhoneAndCodeActivity extends BaseActivity implements PhoneVerificat
     @Override
     protected void onResume() {
         super.onResume();
-        setDisableGlobalListen(true);
-        setEnableListeningLoop(false);
+       MLVoiceSynthetize.stop();
     }
 }

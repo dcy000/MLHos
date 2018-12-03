@@ -47,7 +47,7 @@ public class ChoiceIDCardRegisterTypeActivity extends BaseActivity {
         mRightView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChoiceIDCardRegisterTypeActivity.this, WifiConnectActivity.class));
+//                startActivity(new Intent(ChoiceIDCardRegisterTypeActivity.this, WifiConnectActivity.class));
             }
         });
 

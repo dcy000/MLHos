@@ -12,12 +12,13 @@ import com.gcml.auth.require2.dialog.DialogTypeEnum;
 import com.gcml.auth.require2.dialog.SomeCommonDialog;
 import com.gcml.auth.require2.register.activtiy.ChoiceIDCardRegisterTypeActivity;
 import com.gcml.auth.require2.wrap.CanClearEditText;
+import com.gcml.common.oldnet.NetworkApi;
+import com.gcml.common.oldnet.NetworkManager;
+import com.gcml.common.utils.localdata.LocalShared;
 import com.gcml.lib_common.base.old.BaseActivity;
-import com.gcml.lib_common.oldnet.NetworkApi;
-import com.gcml.lib_common.oldnet.NetworkManager;
 import com.gcml.lib_common.util.business.Utils;
 import com.gcml.lib_common.util.common.ActivityHelper;
-import com.tencent.bugly.crashreport.biz.UserInfoBean;
+import com.gcml.common.data.UserInfoBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +52,7 @@ public class LoginByIDCardNuberActivity extends BaseActivity implements SomeComm
         mRightView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginByIDCardNuberActivity.this, WifiConnectActivity.class));
+//                startActivity(new Intent(LoginByIDCardNuberActivity.this, WifiConnectActivity.class));
             }
         });
 
@@ -60,12 +61,6 @@ public class LoginByIDCardNuberActivity extends BaseActivity implements SomeComm
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setEnableListeningLoop(false);
-        setDisableGlobalListen(true);
-    }
 
     @OnClick({R.id.tv_next})
     public void onViewClicked(View view) {
@@ -98,7 +93,7 @@ public class LoginByIDCardNuberActivity extends BaseActivity implements SomeComm
                 LocalShared.getInstance(mContext).setUserPhoto(response.user_photo);
                 LocalShared.getInstance(mContext).setUserAge(response.age);
                 LocalShared.getInstance(mContext).setUserHeight(response.height);
-                new JpushAliasUtils(LoginByIDCardNuberActivity.this).setAlias("user_" + response.bid);
+//                new JpushAliasUtils(LoginByIDCardNuberActivity.this).setAlias("user_" + response.bid);
 
                 startActivity(new Intent(LoginByIDCardNuberActivity.this, CodeActivity.class).putExtra("phone", response.tel));
             }

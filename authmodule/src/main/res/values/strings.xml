@@ -1,2 +1,8 @@
 <resources>
+    <string name="sign_in_idcard_reader">请把身份证放在身份证阅读器上</string>
+
+    <string name="tiaoguo">跳&#160;&#160;过</string>
+    <!--导航栏的背景颜色-->
+    <color name="toolbar_bg">#3F86FC</color>
+    <color name="toolbar_bg_press">#993F86FC</color>
 </resources>

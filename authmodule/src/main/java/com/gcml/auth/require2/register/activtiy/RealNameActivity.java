@@ -15,6 +15,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.gcml.auth.require2.register.activtiy.IDCardNumberRegisterActivity.REGISTER_REAL_NAME;
+
 
 public class RealNameActivity extends BaseActivity {
 
@@ -50,7 +52,7 @@ public class RealNameActivity extends BaseActivity {
         mRightView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RealNameActivity.this, WifiConnectActivity.class));
+//                startActivity(new Intent(RealNameActivity.this, WifiConnectActivity.class));
             }
         });
 
@@ -70,10 +72,4 @@ public class RealNameActivity extends BaseActivity {
                 .putExtras(getIntent()));
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setDisableGlobalListen(true);
-        setEnableListeningLoop(false);
-    }
 }

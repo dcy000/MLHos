@@ -9,13 +9,14 @@ import android.widget.TextView;
 
 import com.gcml.auth.R;
 import com.gcml.auth.require2.wrap.CanClearEditText;
+import com.gcml.common.data.UserInfoBean;
+import com.gcml.common.oldnet.NetworkApi;
+import com.gcml.common.oldnet.NetworkManager;
 import com.gcml.lib_common.base.old.BaseActivity;
-import com.gcml.lib_common.oldnet.NetworkApi;
-import com.gcml.lib_common.oldnet.NetworkManager;
 import com.gcml.lib_common.util.business.Utils;
 import com.gcml.lib_common.util.common.ActivityHelper;
+import com.gcml.lib_common.util.common.T;
 import com.iflytek.synthetize.MLVoiceSynthetize;
-import com.tencent.bugly.crashreport.biz.UserInfoBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +55,7 @@ public class IDCardNumberRegisterActivity extends BaseActivity implements CanCle
         mRightView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(IDCardNumberRegisterActivity.this, WifiConnectActivity.class));
+//                startActivity(new Intent(IDCardNumberRegisterActivity.this, WifiConnectActivity.class));
             }
         });
 
@@ -75,7 +76,7 @@ public class IDCardNumberRegisterActivity extends BaseActivity implements CanCle
         }
 
         if (!Utils.checkIdCard1(phone)) {
-            speak(R.string.sign_up_id_card_tip);
+            speak("请输入正确的身份证号码");
             return;
         }
 
@@ -103,12 +104,6 @@ public class IDCardNumberRegisterActivity extends BaseActivity implements CanCle
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setDisableGlobalListen(true);
-        setEnableListeningLoop(false);
-    }
 
     public static final String REGISTER_IDCARD_NUMBER = "registerIdCardNumber";
     public static final String REGISTER_PHONE_NUMBER = "registerPhoneNumber";

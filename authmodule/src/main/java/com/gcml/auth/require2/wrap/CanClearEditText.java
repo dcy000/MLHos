@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.gcml.auth.R;
+import com.gcml.common.utils.ui.UiUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

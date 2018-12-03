@@ -21,6 +21,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.gcml.auth.require2.register.activtiy.InputFaceActivity.REGISTER_ADDRESS;
+
 
 public class AddressActivity extends BaseActivity {
 

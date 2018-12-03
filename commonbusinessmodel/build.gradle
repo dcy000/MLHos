@@ -46,4 +46,6 @@ dependencies {
     //高斯模糊
     implementation 'com.github.mmin18:realtimeblurview:1.1.0'
     implementation 'com.thanosfisherman.elvis:elvis:2.0'
+    compile 'com.lzy.net:okgo:3.0.4'
+
 }

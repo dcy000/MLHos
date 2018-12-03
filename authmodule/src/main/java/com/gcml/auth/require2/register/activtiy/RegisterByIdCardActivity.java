@@ -1,5 +1,6 @@
 package com.gcml.auth.require2.register.activtiy;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -16,17 +17,24 @@ import android.view.View;
 import com.gcml.auth.R;
 import com.gcml.auth.require2.dialog.DialogTypeEnum;
 import com.gcml.auth.require2.dialog.SomeCommonDialog;
+import com.gcml.common.data.UserInfoBean;
+import com.gcml.common.oldnet.NetworkApi;
+import com.gcml.common.oldnet.NetworkManager;
+import com.gcml.common.utils.localdata.LocalShared;
 import com.gcml.lib_common.base.old.BaseActivity;
-import com.gcml.lib_common.oldnet.NetworkApi;
-import com.gcml.lib_common.oldnet.NetworkManager;
 import com.gcml.lib_common.util.common.ActivityHelper;
 import com.iflytek.synthetize.MLVoiceSynthetize;
 import com.kaer.sdk.IDCardItem;
+import com.kaer.sdk.bt.BtReadClient;
 import com.kaer.sdk.bt.OnBluetoothListener;
-import com.tencent.bugly.crashreport.biz.UserInfoBean;
 
 import java.lang.reflect.Method;
 import java.util.Set;
+
+import static com.gcml.auth.require2.register.activtiy.IDCardNumberRegisterActivity.REGISTER_ADDRESS;
+import static com.gcml.auth.require2.register.activtiy.IDCardNumberRegisterActivity.REGISTER_IDCARD_NUMBER;
+import static com.gcml.auth.require2.register.activtiy.InputFaceActivity.REGISTER_REAL_NAME;
+import static com.gcml.auth.require2.register.activtiy.InputFaceActivity.REGISTER_SEX;
 
 
 public class RegisterByIdCardActivity extends BaseActivity implements SomeCommonDialog.OnDialogClickListener {
@@ -40,6 +48,7 @@ public class RegisterByIdCardActivity extends BaseActivity implements SomeCommon
     private volatile boolean isRegistered;
     private boolean isLogin;
 
+    @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -440,6 +449,10 @@ public class RegisterByIdCardActivity extends BaseActivity implements SomeCommon
         }
     };
 
+    private void speak(String content) {
+        MLVoiceSynthetize.startSynthesize(getApplication(),content);
+    }
+
 
     private void onReadFailed() {
         item = null;
@@ -483,7 +496,7 @@ public class RegisterByIdCardActivity extends BaseActivity implements SomeCommon
                     LocalShared.getInstance(mContext).setUserAge(response.age);
                     LocalShared.getInstance(mContext).setUserHeight(response.height);
                     new JpushAliasUtils(RegisterByIdCardActivity.this).setAlias("user_" + response.bid);
-                    startActivity(new Intent(RegisterByIdCardActivity.this, InquiryAndFileActivity.class));
+//                    startActivity(new Intent(RegisterByIdCardActivity.this, InquiryAndFileActivity.class));
                     return;
                 }
                 //注册场景

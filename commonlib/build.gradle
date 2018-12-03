@@ -32,6 +32,7 @@ android {
 dependencies {
     api project(':voicelib')
     api project(':widgetlib')
+
     //dagger2
     implementation rootProject.ext.dependencies["dagger2"]
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]

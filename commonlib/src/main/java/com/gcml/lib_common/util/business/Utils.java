@@ -48,6 +48,12 @@ public class Utils {
         WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         return wm.getConnectionInfo().getMacAddress();
     }
+    public static String stampToDate3(long s){
+        SimpleDateFormat format =  new SimpleDateFormat("MMddHH");
+        Long time=new Long(s);
+        String d = format.format(time);
+        return d;
+    }
 
     public static int ageByBirthday(String birthday) {
         SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());

@@ -1,6 +1,5 @@
 package com.gcml.auth.require2.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -8,11 +7,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gcml.auth.R;
+import com.gcml.common.data.UserInfoBean;
+import com.gcml.common.oldnet.NetworkApi;
+import com.gcml.common.oldnet.NetworkManager;
+import com.gcml.common.utils.localdata.LocalShared;
 import com.gcml.lib_common.base.old.BaseActivity;
-import com.gcml.lib_common.oldnet.NetworkApi;
-import com.gcml.lib_common.oldnet.NetworkManager;
 import com.gcml.lib_common.util.common.ActivityHelper;
-import com.tencent.bugly.crashreport.biz.UserInfoBean;
+import com.gcml.lib_common.util.common.Handlers;
+import com.gcml.lib_common.util.common.T;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,6 +22,8 @@ import org.json.JSONObject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.gcml.common.oldnet.NetworkApi.PASSWORD;
 
 
 public class CodeActivity extends BaseActivity {
@@ -112,7 +116,7 @@ public class CodeActivity extends BaseActivity {
                 LocalShared.getInstance(mContext).setUserAge(response.age);
                 LocalShared.getInstance(mContext).setUserHeight(response.height);
                 hideLoadingDialog();
-                startActivity(new Intent(CodeActivity.this, InquiryAndFileActivity.class));
+//                startActivity(new Intent(CodeActivity.this, InquiryAndFileActivity.class));
                 finish();
             }
         }, new NetworkManager.FailedCallback() {

@@ -1,7 +1,6 @@
 package com.gcml.auth.require2.register.activtiy;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -20,11 +19,15 @@ import android.widget.ImageView;
 import com.gcml.auth.R;
 import com.gcml.auth.require2.bean.GetUserXFInfoBean;
 import com.gcml.auth.require2.dialog.AffirmHeadDialog;
+import com.gcml.common.data.UserInfoBean;
+import com.gcml.common.oldnet.NetworkApi;
+import com.gcml.common.oldnet.NetworkManager;
+import com.gcml.common.utils.localdata.LocalShared;
 import com.gcml.lib_common.base.old.BaseActivity;
-import com.gcml.lib_common.oldnet.NetworkApi;
-import com.gcml.lib_common.oldnet.NetworkManager;
 import com.gcml.lib_common.util.business.Utils;
 import com.gcml.lib_common.util.common.ActivityHelper;
+import com.gcml.lib_common.util.common.Handlers;
+import com.gcml.lib_common.util.common.T;
 import com.google.gson.Gson;
 import com.iflytek.cloud.FaceRequest;
 import com.iflytek.cloud.RequestListener;
@@ -34,13 +37,9 @@ import com.iflytek.synthetize.MLSynthesizerListener;
 import com.iflytek.synthetize.MLVoiceSynthetize;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.medlink.danbogh.utils.Handlers;
-import com.medlink.danbogh.utils.JpushAliasUtils;
-import com.medlink.danbogh.utils.T;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
-import com.tencent.bugly.crashreport.biz.UserInfoBean;
 
 import org.json.JSONObject;
 
@@ -189,7 +188,7 @@ public class InputFaceActivity extends BaseActivity implements AffirmHeadDialog.
     }
 
     private void toOtherPages(String stringExtra, String url) {
-        Intent intent = new Intent(this, DetectActivity.class);
+      /*  Intent intent = new Intent(this, DetectActivity.class);
         //====附加的头像url===开始===//
         intent.putExtra("detectHeadIcon", url);
         //====附加的头像url===结束===//
@@ -216,7 +215,7 @@ public class InputFaceActivity extends BaseActivity implements AffirmHeadDialog.
                 startActivity(new Intent(this, OlderHealthManagementSerciveActivity.class).
                         putExtra("detectHeadIcon", url));
                 break;
-        }
+        }*/
 
     }
 
@@ -338,7 +337,7 @@ public class InputFaceActivity extends BaseActivity implements AffirmHeadDialog.
         mRightView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(InputFaceActivity.this, WifiConnectActivity.class));
+//                startActivity(new Intent(InputFaceActivity.this, WifiConnectActivity.class));
             }
         });
     }
@@ -462,7 +461,7 @@ public class InputFaceActivity extends BaseActivity implements AffirmHeadDialog.
     }
 
     private void signUp(String url) {
-        showLoadingDialog(getString(R.string.do_register));
+        showLoadingDialog("");
         final LocalShared shared = LocalShared.getInstance(this);
         NetworkApi.register(
                 registeRrealName,
@@ -487,9 +486,10 @@ public class InputFaceActivity extends BaseActivity implements AffirmHeadDialog.
                         LocalShared.getInstance(mContext).setUserPhoto(response.user_photo);
                         LocalShared.getInstance(mContext).setUserAge(response.age);
                         LocalShared.getInstance(mContext).setUserHeight(response.height);
-                        new JpushAliasUtils(InputFaceActivity.this).setAlias("user_" + response.bid);
-                        startActivity(new Intent(InputFaceActivity.this, InquiryAndFileActivity.class)
-                                .putExtra("isRegister", true));
+//                        new JpushAliasUtils(InputFaceActivity.this).setAlias("user_" + response.bid);
+//                        startActivity(new Intent(InputFaceActivity.this, InquiryAndFileActivity.class)
+//                                .putExtra("isRegister", true)
+//                        );
                     }
                 }, new NetworkManager.FailedCallback() {
                     @Override
