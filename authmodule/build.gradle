@@ -1,3 +1,4 @@
+ext.mainApp = true
 apply from: rootProject.file('build-base.gradle')
 
 android {
@@ -25,8 +26,8 @@ dependencies {
     compile 'com.contrarywind:Android-PickerView:4.1.6'
     implementation 'com.jakewharton:butterknife:8.4.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
-    compile('liji.library.dev:citypickerview:3.1.5') {
-        exclude group: 'pinyin4j-2.5.0'
+    implementation('liji.library.dev:citypickerview:3.1.5') {
+        exclude (group: 'pinyin4j-2.5.0')
     }
 
     compile('com.airbnb.android:lottie:2.2.5', {

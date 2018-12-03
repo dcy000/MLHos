@@ -495,7 +495,7 @@ public class RegisterByIdCardActivity extends BaseActivity implements SomeCommon
                     LocalShared.getInstance(mContext).setUserPhoto(response.user_photo);
                     LocalShared.getInstance(mContext).setUserAge(response.age);
                     LocalShared.getInstance(mContext).setUserHeight(response.height);
-                    new JpushAliasUtils(RegisterByIdCardActivity.this).setAlias("user_" + response.bid);
+//                    new JpushAliasUtils(RegisterByIdCardActivity.this).setAlias("user_" + response.bid);
 //                    startActivity(new Intent(RegisterByIdCardActivity.this, InquiryAndFileActivity.class));
                     return;
                 }

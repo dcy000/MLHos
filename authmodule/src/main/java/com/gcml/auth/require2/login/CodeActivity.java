@@ -108,7 +108,7 @@ public class CodeActivity extends BaseActivity {
         NetworkApi.login(phoneNumber, PASSWORD, new NetworkManager.SuccessCallback<UserInfoBean>() {
             @Override
             public void onSuccess(UserInfoBean response) {
-                new JpushAliasUtils(CodeActivity.this).setAlias("user_" + response.bid);
+//                new JpushAliasUtils(CodeActivity.this).setAlias("user_" + response.bid);
                 LocalShared.getInstance(mContext).setUserInfo(response);
                 LocalShared.getInstance(mContext).addAccount(response.bid, response.xfid);
                 LocalShared.getInstance(mContext).setSex(response.sex);

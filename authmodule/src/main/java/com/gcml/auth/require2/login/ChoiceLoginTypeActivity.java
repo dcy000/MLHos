@@ -7,22 +7,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gcml.auth.R;
-import com.gcml.auth.require2.healthservice.BindHealthManageSystemActivity;
 import com.gcml.auth.require2.register.activtiy.ChoiceIDCardRegisterTypeActivity;
 import com.gcml.auth.require2.register.activtiy.RegisterByIdCardActivity;
-import com.gcml.common.oldnet.NetworkApi;
 import com.gcml.lib_common.base.old.BaseActivity;
-import com.gcml.lib_common.util.business.Utils;
 import com.gcml.lib_common.util.common.ActivityHelper;
 import com.gcml.lib_common.util.common.T;
-import com.lzy.okgo.callback.StringCallback;
-
-import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Response;
 
 public class ChoiceLoginTypeActivity extends BaseActivity {
 

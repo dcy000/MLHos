@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.gcml.auth">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gcml.auth">
 
-    <application>
+    <application
+        android:name="com.gcml.lib_common.app.BaseApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name="com.gcml.auth.require2.register.activtiy.SexActivity" />
+        <activity android:name="com.gcml.auth.require2.register.activtiy.AddressActivity" />
+        <activity android:name="com.gcml.auth.require2.register.activtiy.ChoiceIDCardRegisterTypeActivity">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity android:name="com.gcml.auth.require2.register.activtiy.InputFaceActivity" />
+        <activity android:name="com.gcml.auth.require2.register.activtiy.PhoneAndCodeActivity" />
+        <activity android:name="com.gcml.auth.require2.register.activtiy.RealNameActivity" />
+        <activity android:name="com.gcml.auth.require2.register.activtiy.RegisterByIdCardActivity" />
+        <activity android:name="com.gcml.auth.require2.register.activtiy.IDCardNumberRegisterActivity" />
+        <activity android:name="com.gcml.auth.require2.login.ChoiceLoginTypeActivity" />
+        <activity android:name="com.gcml.auth.require2.login.CodeActivity" />
+        <activity android:name="com.gcml.auth.require2.login.FaceLoginActivity" />
+        <activity android:name="com.gcml.auth.require2.login.LoginByIDCardNuberActivity" />
     </application>
 
 </manifest>

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.gcml.auth.R;
 import com.gcml.lib_widget.CircleImageView;
 
 import butterknife.BindView;
@@ -18,7 +19,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-import static u.aly.au.R;
 
 /**
  * 头像确认的dialog
