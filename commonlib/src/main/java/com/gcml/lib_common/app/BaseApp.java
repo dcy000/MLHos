@@ -7,6 +7,7 @@ import android.support.multidex.MultiDex;
 import com.gcml.lib_common.lifecycle.AppDelegate;
 import com.gcml.lib_common.lifecycle.TopActivityHelper;
 import com.gcml.lib_common.util.business.UiUtils;
+import com.gcml.lib_common.util.common.T;
 import com.iflytek.cloud.SpeechUtility;
 
 /**
@@ -29,10 +30,15 @@ public class BaseApp extends Application {
         super.onCreate();
         AppDelegate.INSTANCE.onCreate(this);
         app = this;
+        initToast();
         initBugly();
         initXFVoice();
         screenAdaptation();
         registerActivityLifecycleCallbacks(new TopActivityHelper());
+    }
+
+    private void initToast() {
+        T.init(this);
     }
 
     @Override
