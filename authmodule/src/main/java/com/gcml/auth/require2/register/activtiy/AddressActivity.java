@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gcml.auth.R;
@@ -17,41 +18,48 @@ import com.lljjcoder.bean.ProvinceBean;
 import com.lljjcoder.citywheel.CityConfig;
 import com.lljjcoder.style.citypickerview.CityPickerView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 import static com.gcml.auth.require2.register.activtiy.InputFaceActivity.REGISTER_ADDRESS;
 
 
-public class AddressActivity extends BaseActivity {
+public class AddressActivity extends BaseActivity implements View.OnClickListener {
 
-    @BindView(R.id.tv_address)
-    TextView tvAddress;
-    @BindView(R.id.tv_province_info)
-    TextView tvProvinceInfo;
-    @BindView(R.id.tv_city_info)
-    TextView tvCityInfo;
-    @BindView(R.id.tv_block_info)
-    TextView tvBlockInfo;
-    @BindView(R.id.tv_province)
-    TextView tvProvince;
-    @BindView(R.id.tv_city)
-    TextView tvCity;
-    @BindView(R.id.tv_city2)
-    TextView tvCity2;
-    @BindView(R.id.canClearEditText)
-    CanClearEditText canClearEditText;
-    @BindView(R.id.tv_next)
-    TextView tvNext;
 
     CityPickerView cityPicker = new CityPickerView();
+    private ImageView imageView2;
+    /**
+     * 您的户籍地址
+     */
+    private TextView tvAddress;
+    private TextView tvProvinceInfo;
+    private TextView tvCityInfo;
+    private TextView tvBlockInfo;
+    /**
+     * 省
+     */
+    private TextView tvProvince;
+    /**
+     * 市
+     */
+    private TextView tvCity;
+    /**
+     * 区/县
+     */
+    private TextView tvCity2;
+    /**
+     * TextView
+     */
+    private TextView textView19;
+    private CanClearEditText canClearEditText;
+    /**
+     * 下一步
+     */
+    private TextView tvNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
-        ButterKnife.bind(this);
+        initView();
         initTile();
         initCityPicker();
         ActivityHelper.addActivity(this);
@@ -137,28 +145,25 @@ public class AddressActivity extends BaseActivity {
         canClearEditText.setHintText("请输入详细地址");
     }
 
-    @OnClick({R.id.tv_province_info, R.id.tv_city_info, R.id.tv_block_info, R.id.tv_next})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tv_province_info:
-            case R.id.tv_city_info:
-            case R.id.tv_block_info:
-                cityPicker.showCityPicker();
-                break;
-            case R.id.tv_next:
-                if (TextUtils.isEmpty(tvProvinceInfo.getText().toString().trim())) {
-                    mlSpeak("请输入您的户籍地址 ");
-                    return;
-                }
+        int i = view.getId();
+        if (i == R.id.tv_province_info || i == R.id.tv_city_info || i == R.id.tv_block_info) {
+            cityPicker.showCityPicker();
 
-                if (TextUtils.isEmpty(tvCityInfo.getText().toString().trim())) {
-                    mlSpeak("请输入您的户籍地址 ");
-                    return;
-                }
-                if (TextUtils.isEmpty(tvBlockInfo.getText().toString().trim())) {
-                    mlSpeak("请输入您的户籍地址 ");
-                    return;
-                }
+        } else if (i == R.id.tv_next) {
+            if (TextUtils.isEmpty(tvProvinceInfo.getText().toString().trim())) {
+                mlSpeak("请输入您的户籍地址 ");
+                return;
+            }
+
+            if (TextUtils.isEmpty(tvCityInfo.getText().toString().trim())) {
+                mlSpeak("请输入您的户籍地址 ");
+                return;
+            }
+            if (TextUtils.isEmpty(tvBlockInfo.getText().toString().trim())) {
+                mlSpeak("请输入您的户籍地址 ");
+                return;
+            }
 
 
             String detailAddress = canClearEditText.getPhone();
@@ -170,7 +175,30 @@ public class AddressActivity extends BaseActivity {
             startActivity(new Intent(this, InputFaceActivity.class)
                     .putExtras(getIntent())
                     .putExtra(REGISTER_ADDRESS, address));
-            break;
+
         }
+    }
+
+    private void initView() {
+        imageView2 = (ImageView) findViewById(R.id.imageView2);
+        tvAddress = (TextView) findViewById(R.id.tv_address);
+        tvProvinceInfo = (TextView) findViewById(R.id.tv_province_info);
+        tvProvinceInfo.setOnClickListener(this);
+        tvCityInfo = (TextView) findViewById(R.id.tv_city_info);
+        tvCityInfo.setOnClickListener(this);
+        tvBlockInfo = (TextView) findViewById(R.id.tv_block_info);
+        tvBlockInfo.setOnClickListener(this);
+        tvProvince = (TextView) findViewById(R.id.tv_province);
+        tvCity = (TextView) findViewById(R.id.tv_city);
+        tvCity2 = (TextView) findViewById(R.id.tv_city2);
+        textView19 = (TextView) findViewById(R.id.textView19);
+        canClearEditText = (CanClearEditText) findViewById(R.id.canClearEditText);
+        tvNext = (TextView) findViewById(R.id.tv_next);
+        tvNext.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        onViewClicked(v);
     }
 }

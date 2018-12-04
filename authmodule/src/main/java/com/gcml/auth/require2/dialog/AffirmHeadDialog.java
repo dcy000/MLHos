@@ -14,11 +14,6 @@ import android.widget.TextView;
 import com.gcml.auth.R;
 import com.gcml.lib_widget.CircleImageView;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-
 
 /**
  * 头像确认的dialog
@@ -26,15 +21,11 @@ import butterknife.Unbinder;
  */
 
 @SuppressLint("ValidFragment")
-public class AffirmHeadDialog extends DialogFragment {
+public class AffirmHeadDialog extends DialogFragment implements View.OnClickListener {
     private final byte[] imageData;
-    @BindView(R.id.iv_head)
-    CircleImageView ivHead;
-    @BindView(R.id.confirm)
-    TextView confirm;
-    @BindView(R.id.cancel)
-    TextView cancel;
-    Unbinder unbinder;
+    public CircleImageView ivHead;
+    public TextView confirm;
+    public TextView cancel;
 
     @SuppressLint("ValidFragment")
     public AffirmHeadDialog(byte[] imageData) {
@@ -52,7 +43,11 @@ public class AffirmHeadDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_affirm_head, container, false);
-        unbinder = ButterKnife.bind(this, view);
+        ivHead = view.findViewById(R.id.iv_head);
+        confirm = view.findViewById(R.id.confirm);
+        cancel = view.findViewById(R.id.cancel);
+        confirm.setOnClickListener(this);
+        cancel.setOnClickListener(this);
         updateHead();
         return view;
     }
@@ -68,26 +63,25 @@ public class AffirmHeadDialog extends DialogFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 
-    @OnClick({R.id.confirm, R.id.cancel})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.confirm:
-                if (listener != null) {
-                    listener.onConfirm();
-                }
-                dismiss();
-                break;
-            case R.id.cancel:
+    @Override
+    public void onClick(View view) {
+        int i = view.getId();
+        if (i == R.id.confirm) {
+            if (listener != null) {
+                listener.onConfirm();
+            }
+            dismiss();
 
-                if (listener != null) {
-                    listener.onCancel();
-                }
-                dismiss();
-                break;
+        } else if (i == R.id.cancel) {
+            if (listener != null) {
+                listener.onCancel();
+            }
+            dismiss();
+
         }
+
     }
 
     public interface ClickListener {

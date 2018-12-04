@@ -11,29 +11,44 @@ import android.widget.TextView;
 
 import com.gcml.auth.R;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
-
 /**
  * 常用提示的dialog
  * Created by lenovo on 2018/7/11.
  */
 
 @SuppressLint("ValidFragment")
-public class SomeCommonDialog extends DialogFragment {
+public class SomeCommonDialog extends DialogFragment implements View.OnClickListener {
 
     private final DialogTypeEnum type;
-    @BindView(R.id.tv_title)
-    TextView tvTitle;
-    @BindView(R.id.confirm)
-    TextView confirm;
-    @BindView(R.id.cancel)
-    TextView cancel;
-    Unbinder unbinder;
     private OnDialogClickListener listener;
+    private View view;
+    private TextView tvTitle;
+    /**
+     * 确定
+     */
+    private TextView confirm;
+    /**
+     * 取消
+     */
+    private TextView cancel;
 
+    private void initView(View view) {
+        tvTitle = (TextView) view.findViewById(R.id.tv_title);
+        confirm = (TextView) view.findViewById(R.id.confirm);
+        confirm.setOnClickListener(this);
+        cancel = (TextView) view.findViewById(R.id.cancel);
+        cancel.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.confirm) {
+            clickConfirm();
+        } else if (i == R.id.cancel) {
+            clickCancel();
+        }
+    }
 
 
     public interface OnDialogClickListener {
@@ -54,32 +69,16 @@ public class SomeCommonDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(android.support.v4.app.DialogFragment.STYLE_NO_TITLE, R.style.XDialog);
+        setStyle(DialogFragment.STYLE_NO_TITLE, R.style.XDialog);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.some_common_dialog, container, false);
-        unbinder = ButterKnife.bind(this, view);
-        tvTitle.setText(type.getValue());
-        confirm.setText(type.getLeftText());
-        cancel.setText(type.getRifhtText());
+        initView(view);
         return view;
     }
-
-    @OnClick({R.id.confirm, R.id.cancel})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.confirm:
-                clickConfirm();
-                break;
-            case R.id.cancel:
-                clickCancel();
-                break;
-        }
-    }
-
 
     private void clickConfirm() {
         if (listener == null) {

@@ -4,14 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gcml.auth.R;
 import com.gcml.auth.require2.wrap.PhoneVerificationCodeView;
-import com.gcml.common.utils.display.ToastUtils;
-import com.gcml.lib_common.base.old.BaseActivity;
 import com.gcml.common.oldnet.NetworkApi;
 import com.gcml.common.oldnet.NetworkManager;
+import com.gcml.common.utils.display.ToastUtils;
+import com.gcml.lib_common.base.old.BaseActivity;
 import com.gcml.lib_common.util.common.ActivityHelper;
 import com.gcml.lib_common.util.common.T;
 import com.iflytek.synthetize.MLVoiceSynthetize;
@@ -19,22 +20,14 @@ import com.iflytek.synthetize.MLVoiceSynthetize;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 import static com.gcml.auth.require2.register.activtiy.IDCardNumberRegisterActivity.REGISTER_PHONE_NUMBER;
 
 
-public class PhoneAndCodeActivity extends BaseActivity implements PhoneVerificationCodeView.OnSendClickListener {
+public class PhoneAndCodeActivity extends BaseActivity implements PhoneVerificationCodeView.OnSendClickListener, View.OnClickListener {
     public static final String FROM_WHERE = "from_where";
     public static final String FROM_REGISTER_BY_IDCARD = "register_by_idCard";
     public static final String FROM_REGISTER_BY_IDCARD_NUMBER = "register_by_idCard_number";
     public static final String DEFAULT_CODE = "8888";
-    @BindView(R.id.phone_view)
-    PhoneVerificationCodeView phoneView;
-    @BindView(R.id.tv_next)
-    TextView tvNext;
 
     boolean receiveCodeFirst = false;
     /**
@@ -42,12 +35,22 @@ public class PhoneAndCodeActivity extends BaseActivity implements PhoneVerificat
      */
     private String phone = "";
     private String fromWhere;
+    private PhoneVerificationCodeView phoneView;
+    /**
+     * 下一步
+     */
+    private TextView tvNext;
+    private ImageView imageView2;
+    /**
+     * 没有手机号?请点击
+     */
+    private TextView tvCodePhoneAddContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_and_code);
-        ButterKnife.bind(this);
+        initView();
         intTitle();
         initEvent();
         mlSpeak("请输入手机号码,点击发送验证码");
@@ -81,7 +84,6 @@ public class PhoneAndCodeActivity extends BaseActivity implements PhoneVerificat
         phoneView.setListener(this);
     }
 
-    @OnClick(R.id.tv_next)
     public void onViewClicked() {
         if (TextUtils.isEmpty(phoneView.getPhone())) {
             mlSpeak("请输入手机号码");
@@ -191,6 +193,22 @@ public class PhoneAndCodeActivity extends BaseActivity implements PhoneVerificat
     @Override
     protected void onResume() {
         super.onResume();
-       MLVoiceSynthetize.stop();
+        MLVoiceSynthetize.stop();
+    }
+
+    private void initView() {
+        phoneView = (PhoneVerificationCodeView) findViewById(R.id.phone_view);
+        tvNext = (TextView) findViewById(R.id.tv_next);
+        tvNext.setOnClickListener(this);
+        imageView2 = (ImageView) findViewById(R.id.imageView2);
+        tvCodePhoneAddContact = (TextView) findViewById(R.id.tv_code_phone_add_contact);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.tv_next) {
+            onViewClicked();
+        }
     }
 }

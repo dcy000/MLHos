@@ -15,22 +15,15 @@ import android.widget.TextView;
 import com.gcml.auth.R;
 import com.gcml.lib_common.util.business.Utils;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 /**
  * Created by lenovo on 2018/7/11.
  */
 
-public class PhoneVerificationCodeView extends LinearLayout {
-    @BindView(R.id.tv_phone)
-    EditText tvPhone;
-    @BindView(R.id.iv_delete)
-    ImageView ivDelete;
-    @BindView(R.id.et_code)
-    EditText etCode;
-    @BindView(R.id.tv_send_code)
+public class PhoneVerificationCodeView extends LinearLayout implements View.OnClickListener {
+
+    public EditText tvPhone;
+    public ImageView ivDelete;
+    public EditText etCode;
     public TextView tvSendCode;
     private Context context;
 
@@ -46,7 +39,11 @@ public class PhoneVerificationCodeView extends LinearLayout {
 
     private void initView() {
         View view = View.inflate(context, R.layout.phone_verification_view, null);
-        ButterKnife.bind(this, view);
+        tvPhone = view.findViewById(R.id.tv_phone);
+        ivDelete = view.findViewById(R.id.iv_delete);
+        tvSendCode = view.findViewById(R.id.tv_send_code);
+        ivDelete.setOnClickListener(this);
+        tvSendCode.setOnClickListener(this);
         initEvent();
         addView(view);
     }
@@ -84,15 +81,14 @@ public class PhoneVerificationCodeView extends LinearLayout {
         });
     }
 
-    @OnClick({R.id.iv_delete, R.id.tv_send_code})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.iv_delete:
-                clearPhoneNumber();
-                break;
-            case R.id.tv_send_code:
-                sendCode();
-                break;
+        int i = view.getId();
+        if (i == R.id.iv_delete) {
+            clearPhoneNumber();
+
+        } else if (i == R.id.tv_send_code) {
+            sendCode();
+
         }
     }
 
@@ -144,6 +140,11 @@ public class PhoneVerificationCodeView extends LinearLayout {
 
     public String getPhone() {
         return tvPhone.getText().toString().trim();
+    }
+
+    @Override
+    public void onClick(View v) {
+        onViewClicked(v);
     }
 
 

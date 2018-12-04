@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gcml.auth.R;
@@ -11,31 +12,46 @@ import com.gcml.auth.require2.wrap.CanClearEditText;
 import com.gcml.lib_common.base.old.BaseActivity;
 import com.gcml.lib_common.util.common.ActivityHelper;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 import static com.gcml.auth.require2.register.activtiy.IDCardNumberRegisterActivity.REGISTER_REAL_NAME;
 
 
-public class RealNameActivity extends BaseActivity {
+public class RealNameActivity extends BaseActivity implements View.OnClickListener {
+    /**
+     * 实名认证
+     */
+    private TextView textView17;
+    /**
+     * (姓名将与您的居民健康档案绑定，请确认是否填写正确)
+     */
+    private TextView textView18;
+    private CanClearEditText ccetName;
+    /**
+     * 下一步
+     */
+    private TextView tvNext;
+    private ImageView imageView2;
+/*
 
-    @BindView(R.id.ccet_name)
-    CanClearEditText ccetName;
-    @BindView(R.id.tv_next)
-    TextView tvNext;
+    public CanClearEditText ccetName;
+    public TextView tvNext;
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_real_name);
-        ButterKnife.bind(this);
         initTitle();
         initView();
         ActivityHelper.addActivity(this);
     }
 
     private void initView() {
+        textView17 = (TextView) findViewById(R.id.textView17);
+        textView18 = (TextView) findViewById(R.id.textView18);
+        ccetName = (CanClearEditText) findViewById(R.id.ccet_name);
+        tvNext = (TextView) findViewById(R.id.tv_next);
+        tvNext.setOnClickListener(this);
+        imageView2 = (ImageView) findViewById(R.id.imageView2);
         ccetName.setIsChinese(true);
     }
 
@@ -60,7 +76,6 @@ public class RealNameActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.tv_next)
     public void onViewClicked() {
         String realName = ccetName.getPhone();
         if (TextUtils.isEmpty(realName)) {
@@ -72,4 +87,8 @@ public class RealNameActivity extends BaseActivity {
                 .putExtras(getIntent()));
     }
 
+    @Override
+    public void onClick(View v) {
+        onViewClicked();
+    }
 }

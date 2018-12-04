@@ -15,18 +15,13 @@ import android.widget.LinearLayout;
 import com.gcml.auth.R;
 import com.gcml.common.utils.ui.UiUtils;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by lenovo on 2018/7/12.
  */
 
 public class CanClearEditText extends LinearLayout {
-    @BindView(R.id.iv_delete)
-    ImageView ivDelete;
-    @BindView(R.id.tv_phone)
-    EditText tvPhone;
+    public ImageView ivDelete;
+    public EditText tvPhone;
     private Context context;
     private boolean isChinese = false;
 
@@ -55,7 +50,8 @@ public class CanClearEditText extends LinearLayout {
 
     private void initView() {
         View view = View.inflate(context, R.layout.canclear_edittext_view, null);
-        ButterKnife.bind(this, view);
+        tvPhone = view.findViewById(R.id.tv_phone);
+        ivDelete = view.findViewById(R.id.iv_delete);
         if (isChinese) {
             tvPhone.setHint("请输入您的真实姓名");
             tvPhone.setInputType(InputType.TYPE_CLASS_TEXT);

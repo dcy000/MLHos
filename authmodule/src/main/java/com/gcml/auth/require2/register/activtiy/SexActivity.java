@@ -3,33 +3,40 @@ package com.gcml.auth.require2.register.activtiy;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gcml.auth.R;
 import com.gcml.lib_common.base.old.BaseActivity;
 import com.gcml.lib_common.util.common.ActivityHelper;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 import static com.gcml.auth.require2.register.activtiy.IDCardNumberRegisterActivity.REGISTER_SEX;
 
 
-public class SexActivity extends BaseActivity {
+public class SexActivity extends BaseActivity implements View.OnClickListener {
 
-    @BindView(R.id.tv_sex_man)
-    TextView tvSexMan;
-    @BindView(R.id.tv_sex_women)
-    TextView tvSexWomen;
-    @BindView(R.id.tv_next)
-    TextView tvNext;
+    /**
+     * 您的性别
+     */
+    private TextView tvSex;
+    /**
+     * 男
+     */
+    private TextView tvSexMan;
+    /**
+     * 女
+     */
+    private TextView tvSexWomen;
+    /**
+     * 下一步
+     */
+    private TextView tvNext;
+    private ImageView imageView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sex);
-        ButterKnife.bind(this);
         initTitle();
         initView();
         ActivityHelper.addActivity(this);
@@ -64,23 +71,35 @@ public class SexActivity extends BaseActivity {
 
     private void initView() {
         clickMan(true);
+        tvSex = (TextView) findViewById(R.id.tv_sex);
+        tvSexMan = (TextView) findViewById(R.id.tv_sex_man);
+        tvSexMan.setOnClickListener(this);
+        tvSexWomen = (TextView) findViewById(R.id.tv_sex_women);
+        tvSexWomen.setOnClickListener(this);
+        tvNext = (TextView) findViewById(R.id.tv_next);
+        tvNext.setOnClickListener(this);
+        imageView2 = (ImageView) findViewById(R.id.imageView2);
     }
 
-    @OnClick({R.id.tv_sex_man, R.id.tv_sex_women, R.id.tv_next})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tv_sex_man:
-                clickMan(true);
-                break;
-            case R.id.tv_sex_women:
-                clickMan(false);
-                break;
-            case R.id.tv_next:
-                String sex = tvSexMan.isSelected() ? tvSexMan.getTag().toString() : tvSexWomen.getTag().toString();
-                startActivity(new Intent(this, AddressActivity.class)
-                        .putExtra(REGISTER_SEX,sex)
-                        .putExtras(getIntent()));
-                break;
+        int i = view.getId();
+        if (i == R.id.tv_sex_man) {
+            clickMan(true);
+
+        } else if (i == R.id.tv_sex_women) {
+            clickMan(false);
+
+        } else if (i == R.id.tv_next) {
+            String sex = tvSexMan.isSelected() ? tvSexMan.getTag().toString() : tvSexWomen.getTag().toString();
+            startActivity(new Intent(this, AddressActivity.class)
+                    .putExtra(REGISTER_SEX, sex)
+                    .putExtras(getIntent()));
+
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        onViewClicked(v);
     }
 }

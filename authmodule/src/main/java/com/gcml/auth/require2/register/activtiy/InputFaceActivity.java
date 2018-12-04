@@ -49,9 +49,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 public class InputFaceActivity extends BaseActivity implements AffirmHeadDialog.ClickListener {
     private String registerIdCardNumber;
     private String registerPhoneNumber;
@@ -59,9 +56,7 @@ public class InputFaceActivity extends BaseActivity implements AffirmHeadDialog.
     private String registerSex;
     private String registerAddress;
 
-    @BindView(R.id.surface_view)
     SurfaceView surfaceView;
-    @BindView(R.id.iv_circle)
     ImageView ivCircle;
 
     private Camera mCamera;
@@ -78,7 +73,6 @@ public class InputFaceActivity extends BaseActivity implements AffirmHeadDialog.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_face);
-        ButterKnife.bind(this);
         initTitle();
         initData();
         ActivityHelper.addActivity(this);
@@ -95,7 +89,7 @@ public class InputFaceActivity extends BaseActivity implements AffirmHeadDialog.
     };
 
     private void showHeadDialog(byte[] data, Camera camera) {
-        try{
+        try {
             Bitmap b3 = decodeToBitMap(data, camera);
             if (b3 != null) {
                 stream.reset();
@@ -109,7 +103,7 @@ public class InputFaceActivity extends BaseActivity implements AffirmHeadDialog.
             AffirmHeadDialog dialog = new AffirmHeadDialog(faceData);
             dialog.setListener(this);
             dialog.show(getFragmentManager(), "headDialog");
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -301,7 +295,7 @@ public class InputFaceActivity extends BaseActivity implements AffirmHeadDialog.
                         }
                     }
 
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -325,6 +319,9 @@ public class InputFaceActivity extends BaseActivity implements AffirmHeadDialog.
     }
 
     private void initTitle() {
+        surfaceView = findViewById(R.id.surface_view);
+        ivCircle = findViewById(R.id.iv_circle);
+
         mToolbar.setVisibility(View.VISIBLE);
         mTitleText.setText("人 脸 录 入");
 
@@ -346,10 +343,10 @@ public class InputFaceActivity extends BaseActivity implements AffirmHeadDialog.
     @Override
     protected void onResume() {
         super.onResume();
-        try{
+        try {
             holder = surfaceView.getHolder();
             holder.addCallback(callback);
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -384,12 +381,12 @@ public class InputFaceActivity extends BaseActivity implements AffirmHeadDialog.
     @Override
     protected void onPause() {
         super.onPause();
-        try{
+        try {
             mCamera.setPreviewCallback(null);
             mCamera.stopPreview();
             mCamera.release();
             mCamera = null;
-        }catch (Exception e) {
+        } catch (Exception e) {
 
         }
     }

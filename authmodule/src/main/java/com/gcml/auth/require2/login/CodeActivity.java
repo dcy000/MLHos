@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gcml.auth.R;
@@ -19,33 +20,37 @@ import com.gcml.lib_common.util.common.T;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
 import static com.gcml.common.oldnet.NetworkApi.PASSWORD;
 
 
-public class CodeActivity extends BaseActivity {
+public class CodeActivity extends BaseActivity implements View.OnClickListener {
 
 
-    @BindView(R.id.et_code)
-    EditText etCode;
-    @BindView(R.id.tv_send_code)
-    TextView tvSendCode;
-    @BindView(R.id.tv_next)
-    TextView tvNext;
-    @BindView(R.id.textView17)
-    TextView textView17;
     private String phoneNumber;
     private String code = "";
     public static String DEFAULT_CODE = "8888";
+    /**
+     * 请输入手机158****1914收到的验证码
+     */
+    private TextView textView17;
+    /**
+     * 请输入验证码
+     */
+    private EditText etCode;
+    /**
+     * 发送验证码
+     */
+    private TextView tvSendCode;
+    private RelativeLayout rlSendNumber;
+    /**
+     * 下一步
+     */
+    private TextView tvNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_code);
-        ButterKnife.bind(this);
         intTitle();
         initView();
         sendCode();
@@ -53,6 +58,14 @@ public class CodeActivity extends BaseActivity {
     }
 
     private void initView() {
+        textView17 = (TextView) findViewById(R.id.textView17);
+        etCode = (EditText) findViewById(R.id.et_code);
+        tvSendCode = (TextView) findViewById(R.id.tv_send_code);
+        tvSendCode.setOnClickListener(this);
+        rlSendNumber = (RelativeLayout) findViewById(R.id.rl_send_number);
+        tvNext = (TextView) findViewById(R.id.tv_next);
+        tvNext.setOnClickListener(this);
+
         phoneNumber = getIntent().getStringExtra("phone");
         String phoneStar = phoneNumber.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
         textView17.setText("请输入手机" + phoneStar + "收到的验证码");
@@ -77,16 +90,14 @@ public class CodeActivity extends BaseActivity {
     }
 
 
-
-    @OnClick({R.id.tv_next, R.id.tv_send_code})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tv_next:
-                next();
-                break;
-            case R.id.tv_send_code:
-                sendCode();
-                break;
+        int i = view.getId();
+        if (i == R.id.tv_next) {
+            next();
+
+        } else if (i == R.id.tv_send_code) {
+            sendCode();
+
         }
     }
 
@@ -184,4 +195,9 @@ public class CodeActivity extends BaseActivity {
     }
 
     private int count = 60;
+
+    @Override
+    public void onClick(View v) {
+        onViewClicked(v);
+    }
 }

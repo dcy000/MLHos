@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gcml.auth.R;
@@ -18,26 +19,29 @@ import com.gcml.lib_common.util.common.ActivityHelper;
 import com.gcml.lib_common.util.common.T;
 import com.iflytek.synthetize.MLVoiceSynthetize;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+public class IDCardNumberRegisterActivity extends BaseActivity implements CanClearEditText.OnTextChangeListener, View.OnClickListener {
 
-public class IDCardNumberRegisterActivity extends BaseActivity implements CanClearEditText.OnTextChangeListener {
 
-    @BindView(R.id.textView17)
-    TextView textView17;
-    @BindView(R.id.textView18)
-    TextView textView18;
-    @BindView(R.id.ccet_phone)
-    CanClearEditText ccetPhone;
-    @BindView(R.id.tv_next)
-    TextView tvNext;
+    /**
+     * 身份证号码注册
+     */
+    private TextView textView17;
+    /**
+     * (身份证号将与您的居民健康档案绑定，请确认是否填写正确)
+     */
+    private TextView textView18;
+    private CanClearEditText ccetPhone;
+    /**
+     * 下一步
+     */
+    private TextView tvNext;
+    private ImageView imageView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_idcard_number_register);
-        ButterKnife.bind(this);
+        initView();
         initTitle();
         ActivityHelper.addActivity(this);
     }
@@ -67,22 +71,6 @@ public class IDCardNumberRegisterActivity extends BaseActivity implements CanCle
         MLVoiceSynthetize.startSynthesize(this, text, false);
     }
 
-    @OnClick(R.id.tv_next)
-    public void onViewClicked() {
-        String phone = ccetPhone.getPhone();
-        if (TextUtils.isEmpty(phone)) {
-            speak("请输入您的身份证号码");
-            return;
-        }
-
-        if (!Utils.checkIdCard1(phone)) {
-            speak("请输入正确的身份证号码");
-            return;
-        }
-
-        neworkCheckIdCard(phone);
-
-    }
 
     /**
      * 网络检测身份证是否注册
@@ -117,6 +105,34 @@ public class IDCardNumberRegisterActivity extends BaseActivity implements CanCle
             tvNext.setEnabled(false);
         } else {
             tvNext.setEnabled(true);
+        }
+    }
+
+    private void initView() {
+        textView17 = (TextView) findViewById(R.id.textView17);
+        textView18 = (TextView) findViewById(R.id.textView18);
+        ccetPhone = (CanClearEditText) findViewById(R.id.ccet_phone);
+        tvNext = (TextView) findViewById(R.id.tv_next);
+        tvNext.setOnClickListener(this);
+        imageView2 = (ImageView) findViewById(R.id.imageView2);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.tv_next) {
+            String phone = ccetPhone.getPhone();
+            if (TextUtils.isEmpty(phone)) {
+                speak("请输入您的身份证号码");
+                return;
+            }
+
+            if (!Utils.checkIdCard1(phone)) {
+                speak("请输入正确的身份证号码");
+                return;
+            }
+
+            neworkCheckIdCard(phone);
         }
     }
 }
