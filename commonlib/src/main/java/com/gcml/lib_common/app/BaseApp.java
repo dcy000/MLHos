@@ -8,7 +8,6 @@ import com.gcml.lib_common.lifecycle.AppDelegate;
 import com.gcml.lib_common.lifecycle.TopActivityHelper;
 import com.gcml.lib_common.util.business.UiUtils;
 import com.iflytek.cloud.SpeechUtility;
-import com.tencent.bugly.crashreport.CrashReport;
 
 /**
  * Created by lenovo on 2018/11/29.
@@ -49,7 +48,7 @@ public class BaseApp extends Application {
     }
 
     private void initBugly() {
-        CrashReport.initCrashReport(getApplicationContext(), "082d769382", true);
+//        CrashReport.initCrashReport(getApplicationContext(), "082d769382", true);
     }
 
     private void screenAdaptation() {

@@ -20,5 +20,4 @@ dependencies {
     api project(':commonlib')
     api project(':commonbusinessmodel')
     addComponent 'consitutionmodule'
-    addComponent 'consitutionmodule'
 }
