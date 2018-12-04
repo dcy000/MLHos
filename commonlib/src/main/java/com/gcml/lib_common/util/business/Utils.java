@@ -79,6 +79,7 @@ public class Utils {
         }
     }
 
+
     public static int age(String idCard) {
         if (TextUtils.isEmpty(idCard)
                 || idCard.length() != 18) {
@@ -243,4 +244,81 @@ public class Utils {
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         return format.format(date);
     }
+
+    public static boolean isNumeric(String in) {
+        if (in == null || in.length() == 0) {
+            return false;
+        }
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(in);
+        return isNum.matches();
+    }
+
+    public static String removeNonnumeric(String in) {
+        Pattern pattern = Pattern.compile("[^0-9]");
+        Matcher matcher = pattern.matcher(in);
+        return matcher.replaceAll("").trim();
+    }
+    public static String chineseMapToNumber(String chinese) {
+        if (chinese == null || chinese.length() == 0) {
+            return "";
+        }
+
+
+        char[] chars = chinese.toCharArray();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < chars.length; i++) {
+            char aChar = chars[i];
+            switch (aChar) {
+                case '零':
+                case '0':
+                    builder.append("0");
+                    break;
+                case '一':
+                case '1':
+                    builder.append("1");
+                    break;
+                case '二':
+                case '两':
+                case '2':
+                    builder.append("2");
+                    break;
+                case '三':
+                case '3':
+                    builder.append("3");
+                    break;
+                case '四':
+                case '4':
+                    builder.append("4");
+                    break;
+                case '五':
+                case '5':
+                    builder.append("5");
+                    break;
+                case '六':
+                case '6':
+                    builder.append("6");
+                    break;
+                case '七':
+                case '7':
+                    builder.append("7");
+                    break;
+                case '八':
+                case '8':
+                    builder.append("8");
+                    break;
+                case '九':
+                case '9':
+                    builder.append("9");
+                    break;
+                case '百':
+                    builder.append("00");
+                    break;
+                default:
+                    break;
+            }
+        }
+        return builder.toString();
+    }
+
 }
