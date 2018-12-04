@@ -3,8 +3,8 @@
     package="com.gcml.consitutionmodule">
 
     <application>
-        <activity android:name=".ConsitutionActivity">
-        </activity>
+        <activity android:name=".ConsitutionActivity"></activity>
+        <activity android:name=".ConsitusonReusltActivity"></activity>
     </application>
 
 </manifest>

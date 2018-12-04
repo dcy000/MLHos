@@ -10,54 +10,62 @@ import android.widget.TextView;
 
 import com.gcml.common.oldnet.NetworkApi;
 import com.gcml.common.utils.localdata.LocalShared;
+import com.gcml.consitutionmodule.adapter.FragAdapter;
 import com.gcml.consitutionmodule.bean.HealthManagementAnwserBean;
 import com.gcml.consitutionmodule.bean.HealthManagementResultBean;
 import com.gcml.consitutionmodule.bean.OlderHealthManagementBean;
 import com.gcml.consitutionmodule.fragment.HealthItemFragment;
 import com.gcml.consitutionmodule.wrap.MonitorViewPager;
+import com.gcml.lib_common.app.BaseApp;
 import com.gcml.lib_common.base.old.BaseActivity;
 import com.gcml.lib_common.util.common.T;
 import com.google.gson.Gson;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import retrofit2.Response;
 
-public class ConsitutionActivity extends BaseActivity {
+public class ConsitutionActivity extends BaseActivity implements View.OnClickListener {
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_consitution);
-//    }
-
-    @BindView(R.id.ll_operator)
-    LinearLayout llOperator;
     private List<OlderHealthManagementBean.DataBean.QuestionListBean> questionList = new ArrayList<>();
-    @BindView(R.id.vp)
-    MonitorViewPager vp;
-    @BindView(R.id.tv_previous_item)
-    TextView tvPreviousItem;
-    @BindView(R.id.tv_current_item)
-    TextView tvCurrentItem;
-    @BindView(R.id.tv_next_item)
-    TextView tvNextItem;
     private int count;
     private String hmQuestionnaireId = "";
+    private MonitorViewPager vp;
+    /**
+     * 上一题
+     */
+    private TextView tvPreviousItem;
+    /**
+     * 1/3
+     */
+    private TextView tvCurrentItem;
+    /**
+     * 下一题
+     */
+    private TextView tvNextItem;
+    private LinearLayout llOperator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_older_health_management_sercive);
-        ButterKnife.bind(this);
+        bindView();
+        initView();
         initTitle();
         initData();
+    }
+
+    private void bindView() {
+        vp = (MonitorViewPager) findViewById(R.id.vp);
+        tvPreviousItem = (TextView) findViewById(R.id.tv_previous_item);
+        tvPreviousItem.setOnClickListener(this);
+        tvCurrentItem = (TextView) findViewById(R.id.tv_current_item);
+        tvNextItem = (TextView) findViewById(R.id.tv_next_item);
+        tvNextItem.setOnClickListener(this);
+        llOperator = (LinearLayout) findViewById(R.id.ll_operator);
     }
 
     private void initData() {
@@ -81,6 +89,7 @@ public class ConsitutionActivity extends BaseActivity {
 
                 }
             }
+
 
             @Override
             public void onFinish() {
@@ -112,7 +121,7 @@ public class ConsitutionActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                OlderHealthManagementSerciveActivity.this.index = position;
+                ConsitutionActivity.this.index = position;
                 tvCurrentItem.setText((index + 1) + "/" + count);
 
                 if (isLastPager()) {
@@ -127,6 +136,7 @@ public class ConsitutionActivity extends BaseActivity {
 
             }
         });
+
     }
 
     private void initTitle() {
@@ -134,35 +144,12 @@ public class ConsitutionActivity extends BaseActivity {
         mTitleText.setText("中医体质自查");
     }
 
-    @OnClick({R.id.tv_previous_item, R.id.tv_next_item})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tv_previous_item:
-                preCurrentPage();
-                break;
-            case R.id.tv_next_item:
-                if (questionList == null) {
-                    return;
-                }
-                if (!questionList.get(index).isSelected) {
-                    T.show("请选择答案");
-                    return;
-                }
-
-                if (isLastPager()) {
-                    submit();
-                    return;
-                }
-                nextCurrentPage();
-                break;
-        }
-    }
 
     private void submit() {
         showLoadingDialog("正在提交...");
         HealthManagementAnwserBean anwserBean = new HealthManagementAnwserBean();
         anwserBean.equipmentId = LocalShared.getInstance(this).getEqID();
-        anwserBean.userId = MyApplication.getInstance().userId;
+        anwserBean.userId = LocalShared.getInstance(BaseApp.app).getUserId();
         anwserBean.hmQuestionnaireId = this.hmQuestionnaireId;
         anwserBean.answerList = new ArrayList<>();
 
@@ -209,7 +196,7 @@ public class ConsitutionActivity extends BaseActivity {
      * @param data
      */
     private void gotoResultPage(List<HealthManagementResultBean.DataBean> data) {
-        startActivity(new Intent(this, HealthManagementResultActivity.class).putExtra("result_data", (Serializable) data));
+        startActivity(new Intent(this, ConsitutionActivity.class).putExtra("result_data", (Serializable) data));
         finish();
     }
 
@@ -223,5 +210,31 @@ public class ConsitutionActivity extends BaseActivity {
 
     public void preCurrentPage() {
         vp.setCurrentItem(index - 1, true);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.tv_previous_item) {
+            preCurrentPage();
+
+        } else if (i == R.id.tv_next_item) {
+            if (questionList == null) {
+                return;
+            }
+            if (!questionList.get(index).isSelected) {
+                T.show("请选择答案");
+                return;
+            }
+
+            if (isLastPager()) {
+                submit();
+                return;
+            }
+            nextCurrentPage();
+
+
+        } else {
+        }
     }
 }
