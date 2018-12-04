@@ -1,0 +1,23 @@
+ext.mainApp = true
+apply from: rootProject.file('build-base.gradle')
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        if (project.ext.runAsApp) {
+            applicationId "com.gcml.locationlib"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    api files('libs/BaiduLBS_Android.jar')
+}
