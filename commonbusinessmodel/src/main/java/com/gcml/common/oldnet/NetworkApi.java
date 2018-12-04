@@ -201,4 +201,28 @@ public class NetworkApi {
     }
 
 
+    /**
+     * 老年人中医药健康管理服务记录表  提交答案
+     */
+    public static String POST_HEALTH_MANAGEMENT_ANWSER_URL = BasicUrl + "/ZZB/api/health/inquiry/constitution/questionnaire/";
+
+    public static void postHealthManagementAnwser(String anwserJson, StringCallback callback) {
+        OkGo.<String>post(POST_HEALTH_MANAGEMENT_ANWSER_URL)
+                .headers("equipmentId", Utils.getDeviceId())
+                .upJson(anwserJson)
+                .execute(callback);
+    }
+
+    /**
+     * 老年人中医药健康管理服务记录表
+     */
+
+    public static String TCM_HEALTH_MANAGER_FOR_OLDER = BasicUrl + "/ZZB/api/health/inquiry/constitution/questionnaire/";
+
+    public static void getHealthManagementForOlder(StringCallback stringCallback) {
+        OkGo.<String>get(TCM_HEALTH_MANAGER_FOR_OLDER).headers("equipmentId", Utils.getDeviceId()).execute(stringCallback);
+    }
+
+
+
 }
