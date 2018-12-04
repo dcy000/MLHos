@@ -10,10 +10,10 @@ import com.billy.cc.core.component.IComponent;
 import com.gcml.consitutionmodule.ConsitutionActivity;
 
 /**
- * Created by lenovo on 2018/12/3.
+ * Created by lenovo on 2018/12/4.
  */
 
-class ConsitutionComponent implements IComponent {
+public class ConsitusionComponent implements IComponent {
     @Override
     public String getName() {
         return "com.gcml.consitusion";

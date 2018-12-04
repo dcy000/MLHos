@@ -10,10 +10,10 @@ import com.billy.cc.core.component.IComponent;
 import com.gcml.auth.require2.login.ChoiceLoginTypeActivity;
 
 /**
- * Created by lenovo on 2018/12/3.
+ * Created by lenovo on 2018/12/4.
  */
 
-public class ChoseLoginComponent implements IComponent {
+public class LoginCompnent implements IComponent {
     @Override
     public String getName() {
         return "com.gcml.chocelogin";
